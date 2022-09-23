@@ -1,5 +1,9 @@
 
 import static java.lang.Character.isDigit;
+import static java.lang.Character.isLetter;
+import static java.lang.Character.isLowerCase;
+import static java.lang.Character.isUpperCase;
+import static java.lang.Character.toUpperCase;
 import javax.swing.JOptionPane;
 
 /*
@@ -244,11 +248,26 @@ public class FormRegistro extends javax.swing.JFrame {
             mensagemErro("Preencha todos os campos!");
         }else{
             if (!ValidaCampoNumerico(Telemovel)){
-                mensagemErro("O campo telemovel tem"+"de ser numerico e ter 9 digitos");
+                mensagemErro("O campo telemovel tem"+" de ser numerico e ter 9 digitos");
                 
         }
             if(!ValidaCampoNumerico(NIF)){
-                mensagemErro("O campo NIF tem"+"de ser numerico e ter 9 digitos");
+                mensagemErro("O campo NIF tem"+" de ser numerico e ter 9 digitos");
+            }
+            if (!ValidaCaractere(Nome)){
+                mensagemErro("O campo nome tem"+" de ser MAIOR de 2 digitos e usar apena caracteres");
+            }
+            if (!ValidaCaractereEspeciais(Email)){
+                mensagemErro("O campo Email tem"+" de ter um @ e um '.' depois do @ e nao pode conter ',' ");
+            }
+            if (!ValidaMorada(Morada)){
+                mensagemErro("O campo da Morada tem"+" de ter mais que 5 caracteres");
+            }
+            if (!ValidaPass(PassWord)){
+                mensagemErro("O campo pass tem que ter oito ou mais caracteres, e uma ou mais minusculas ");
+            }
+            if (!RePass.equals(PassWord)){
+                mensagemErro("O campo RePass tem que tem que ser igual ao PassWord ");
             }
         }
         
@@ -341,4 +360,79 @@ public class FormRegistro extends javax.swing.JFrame {
         return true;
     
     }
+
+    private boolean ValidaCaractere(String val) {
+         int y, cont = 0, n = val.length();
+        char b;
+        if (n >= 2) {
+            for (y = 0; y < n; y++) {
+                b = val.charAt(y);
+                if (isLetter(b)) 
+                    cont++;
+                
+            }
+            if (n != cont) 
+                return false;
+        } 
+
+        return true;
+    
+    }
+
+    private boolean ValidaCaractereEspeciais(String vall) {
+        int s,s2,b2,b3,s4;
+        s = vall.indexOf('@');
+        b2 = vall.indexOf(' ');
+        b3 = vall.indexOf(',');
+        s2 =vall.indexOf('.',s);
+        int s3 = vall.indexOf('@', (s+1));
+        if (s ==-1) 
+            return false;
+        if(s2==-1)
+            return false;
+        if (s3!=-1)
+            return false;
+        if (b2 != -1)
+            return false;
+        return b3 == -1;
+        
+    }
+    private boolean ValidaMorada(String Val_) {
+        int  F = Val_.length();
+        return F > 5;
+    }
+
+    private boolean ValidaPass(String Vallor) {
+        int xp, Con = 0,conn = 0,coont = 0, contt = 0,coonn = 0, bb = Vallor.length();
+        char cth;
+        if (bb<=7)
+            return false;
+        else{
+        for (xp = 0; xp < bb; xp++) {
+                cth = Vallor.charAt(xp);
+                if (isLetter(cth)) 
+                    Con++;
+                if(isDigit(cth))
+                    conn++;
+                if(isLowerCase(cth))
+                    coont++;
+                if(isUpperCase(cth))
+                    contt++;
+                if((!isDigit(cth))&&(!isLetter(cth)))
+                    coonn++;
+        }  
+        
+        if ((Con>0)&&(conn>0)&&(coont>0)&&(contt>0)&&(coonn>0)){
+                return true;
+        
+        }else{
+        return false;}}
+    }
+
+    
+        
+  
+       
+    
+    
 }
